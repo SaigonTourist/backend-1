@@ -1,0 +1,49 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "title": "iPhone 15",
+      "description": "modelo anterior al actual",
+      "code": "IPH001",
+      "price": 899,
+      "status": true,
+      "stock": 45,
+      "category": "Smartphones",
+      "thumbnails": []
+    },
+    {
+      "id": 2,
+      "title": "iPhone 16",
+      "description": "Mas poderoso modelo de iPhone",
+      "code": "IPH002",
+      "price": 1999,
+      "status": true,
+      "stock": 50,
+      "category": "Smartphones",
+      "thumbnails": []
+    },
+    {
+      "id": 3,
+      "title": "MacBook Pro",
+      "description": "Laptop de alta gama",
+      "code": "MAC001",
+      "price": 2499,
+      "status": true,
+      "stock": 25,
+      "category": "Laptops",
+      "thumbnails": []
+    },
+    {
+      "id": 4,
+      "title": "Test Product",
+      "description": "Producto de prueba",
+      "code": "TEST001",
+      "price": 100,
+      "status": true,
+      "stock": 10,
+      "category": "Test",
+      "thumbnails": []
+    }
+  ],
+  "lastId": 4
+}

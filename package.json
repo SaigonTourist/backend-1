@@ -1,0 +1,24 @@
+{
+  "name": "backend-coderhouse-entrega1",
+  "version": "1.0.0",
+  "description": "Primera entrega del curso Backend I - Coderhouse",
+  "main": "src/app.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/app.js",
+    "dev": "node --watch src/app.js"
+  },
+  "keywords": [
+    "backend",
+    "express",
+    "nodejs",
+    "coderhouse",
+    "api",
+    "rest"
+  ],
+  "author": "Alan Porco Johnson",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
