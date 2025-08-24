@@ -7,11 +7,11 @@ const PORT = 8080;
 
 app.use(express.json());
 
-// Rutas
+//---rutas
+
 app.use('/api/products', productsRouter);
 app.use('/api/carts', cartsRouter);
 
-// Ruta básica
 app.get('/', (req, res) => {
     res.json({ message: 'API funcionando' });
 });

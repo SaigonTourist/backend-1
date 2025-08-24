@@ -4,7 +4,10 @@ import ProductManager from '../managers/ProductManager.js';
 const router = Router();
 const productManager = new ProductManager('./src/data/products.json');
 
-// GET /api/products/ - Obtener todos los productos
+//---get productos--->
+
+
+
 router.get('/', async (req, res) => {
     try {
         const products = await productManager.getProducts();
@@ -22,7 +25,7 @@ router.get('/', async (req, res) => {
     }
 });
 
-// GET /api/products/:pid - Obtener producto por ID
+//---por id--->
 router.get('/:pid', async (req, res) => {
     try {
         const { pid } = req.params;
@@ -49,7 +52,10 @@ router.get('/:pid', async (req, res) => {
     }
 });
 
-// POST /api/products/ - Crear un nuevo producto
+//---post producto--->
+
+
+
 router.post('/', async (req, res) => {
     try {
         const productData = req.body;
@@ -69,7 +75,10 @@ router.post('/', async (req, res) => {
     }
 });
 
-// PUT /api/products/:pid - Actualizar producto
+//---modificar producto--->
+
+
+
 router.put('/:pid', async (req, res) => {
     try {
         const { pid } = req.params;
@@ -98,7 +107,7 @@ router.put('/:pid', async (req, res) => {
     }
 });
 
-// DELETE /api/products/:pid - Eliminar producto
+//---del prod--->
 router.delete('/:pid', async (req, res) => {
     try {
         const { pid } = req.params;

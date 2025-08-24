@@ -8,7 +8,10 @@ class ProductManager {
         this.lastId = 0;
     }
 
-    // Crear directorio si no existe
+    //---dir--->
+
+
+
     async ensureDirectoryExists() {
         const dir = path.dirname(this.path);
         try {
@@ -18,7 +21,7 @@ class ProductManager {
         }
     }
 
-    // Cargar productos desde el archivo
+    //---cargar productos--->
     async loadProducts() {
         try {
             await this.ensureDirectoryExists();
@@ -27,14 +30,17 @@ class ProductManager {
             this.products = parsedData.products || [];
             this.lastId = parsedData.lastId || 0;
         } catch (error) {
-            // Si el archivo no existe o está corrupto, inicializar vacío
+            
             this.products = [];
             this.lastId = 0;
             await this.saveProducts();
         }
     }
 
-    // Guardar productos en el archivo
+    //---graurdar prodctos--->
+
+
+
     async saveProducts() {
         try {
             await this.ensureDirectoryExists();
@@ -49,24 +55,30 @@ class ProductManager {
         }
     }
 
-    // Obtener todos los productos
+    //---buscar productos--->
+
+
+
     async getProducts() {
         await this.loadProducts();
         return this.products;
     }
 
-    // Obtener producto por ID
+    //---por id--->
     async getProductById(id) {
         await this.loadProducts();
         const product = this.products.find(p => p.id == id);
         return product || null;
     }
 
-    // Agregar un nuevo producto
+    //---agregar prod--->
+
+
+
     async addProduct(productData) {
         await this.loadProducts();
 
-        // Validar campos requeridos
+        
         const requiredFields = ['title', 'description', 'code', 'price', 'stock', 'category'];
         for (const field of requiredFields) {
             if (productData[field] === undefined || productData[field] === null || productData[field] === '') {
@@ -74,13 +86,13 @@ class ProductManager {
             }
         }
 
-        // Validar que el código no se repita
+        
         const existingProduct = this.products.find(p => p.code === productData.code);
         if (existingProduct) {
             throw new Error(`Ya existe un producto con el código: ${productData.code}`);
         }
 
-        // Crear nuevo producto
+        //---crear prod--->
         const newProduct = {
             id: ++this.lastId,
             title: productData.title,
@@ -98,7 +110,7 @@ class ProductManager {
         return newProduct;
     }
 
-    // Actualizar producto
+    //---actualizar prod--->
     async updateProduct(id, updatedFields) {
         await this.loadProducts();
 
@@ -107,12 +119,12 @@ class ProductManager {
             throw new Error(`Producto con ID ${id} no encontrado`);
         }
 
-        // No permitir actualizar el ID
+        //--bloquear el id--->
         if (updatedFields.id !== undefined) {
             delete updatedFields.id;
         }
 
-        // Validar código único si se está actualizando
+        
         if (updatedFields.code) {
             const existingProduct = this.products.find(p => p.code === updatedFields.code && p.id != id);
             if (existingProduct) {
@@ -120,7 +132,6 @@ class ProductManager {
             }
         }
 
-        // Actualizar solo los campos proporcionados
         const updatedProduct = { ...this.products[productIndex] };
         
         Object.keys(updatedFields).forEach(key => {
@@ -134,7 +145,7 @@ class ProductManager {
         return updatedProduct;
     }
 
-    // Eliminar producto
+    //---del prod--->
     async deleteProduct(id) {
         await this.loadProducts();
 
