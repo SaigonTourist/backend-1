@@ -43,7 +43,18 @@
       "stock": 10,
       "category": "Test",
       "thumbnails": []
+    },
+    {
+      "id": 5,
+      "title": "DJI Neo",
+      "description": "Dron de vuelo facil",
+      "code": "DJ001",
+      "price": 430,
+      "status": true,
+      "stock": 430,
+      "category": "Drones",
+      "thumbnails": []
     }
   ],
-  "lastId": 4
+  "lastId": 5
 }

@@ -1,0 +1,164 @@
+<!-- Indicador de conexión -->
+<div class="realtime-indicator">
+    <div id="connectionStatus" class="connection-status disconnected">
+        🔴 Desconectado
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1 class="text-success">⚡ Productos en Tiempo Real</h1>
+            <div>
+                <span id="productCount" class="badge bg-info">{{products.length}} productos</span>
+                <a href="/" class="btn btn-outline-primary ms-2">
+                    🏠 Vista Estática
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Formulario para crear productos -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card border-success">
+            <div class="card-header bg-success text-white">
+                <h5 class="mb-0">➕ Crear Nuevo Producto</h5>
+            </div>
+            <div class="card-body">
+                <form id="productForm">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="title" class="form-label">Título *</label>
+                                <input type="text" class="form-control" id="title" name="title" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="description" class="form-label">Descripción *</label>
+                                <textarea class="form-control" id="description" name="description" rows="2" required></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="code" class="form-label">Código *</label>
+                                <input type="text" class="form-control" id="code" name="code" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="price" class="form-label">Precio *</label>
+                                <input type="number" class="form-control" id="price" name="price" step="0.01" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="stock" class="form-label">Stock *</label>
+                                <input type="number" class="form-control" id="stock" name="stock" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="category" class="form-label">Categoría *</label>
+                                <input type="text" class="form-control" id="category" name="category" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-check mb-3">
+                                <input class="form-check-input" type="checkbox" id="status" name="status" checked>
+                                <label class="form-check-label" for="status">
+                                    Producto disponible
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="thumbnails" class="form-label">URLs de imágenes (opcional)</label>
+                                <input type="text" class="form-control" id="thumbnails" name="thumbnails" placeholder="URL1, URL2, URL3">
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-success">
+                        ➕ Crear Producto
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Lista de productos -->
+<div class="row">
+    <div class="col-12">
+        <div id="productsContainer">
+            {{#if products.length}}
+            <div class="row" id="productsList">
+                {{#each products}}
+                <div class="col-md-6 col-lg-4 mb-4" data-product-id="{{id}}">
+                    <div class="card product-card h-100">
+                        {{#if thumbnails.length}}
+                        <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
+                            <span class="text-muted">📷 {{thumbnails.length}} imagen(es)</span>
+                        </div>
+                        {{/if}}
+                        
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <h5 class="card-title text-primary">{{title}}</h5>
+                                {{#if status}}
+                                <span class="badge bg-success status-badge">Disponible</span>
+                                {{else}}
+                                <span class="badge bg-danger status-badge">No disponible</span>
+                                {{/if}}
+                            </div>
+                            
+                            <p class="card-text text-muted">{{description}}</p>
+                            
+                            <div class="row text-center mb-3">
+                                <div class="col-4">
+                                    <strong class="text-success">${{price}}</strong>
+                                    <br><small class="text-muted">Precio</small>
+                                </div>
+                                <div class="col-4">
+                                    <strong class="text-info">{{stock}}</strong>
+                                    <br><small class="text-muted">Stock</small>
+                                </div>
+                                <div class="col-4">
+                                    <strong class="text-warning">ID: {{id}}</strong>
+                                    <br><small class="text-muted">{{code}}</small>
+                                </div>
+                            </div>
+                            
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="badge bg-secondary">{{category}}</span>
+                                <button class="btn btn-danger btn-sm delete-btn" data-product-id="{{id}}">
+                                    🗑️ Eliminar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {{/each}}
+            </div>
+            {{else}}
+            <div id="emptyState" class="text-center py-5">
+                <div class="mb-4">
+                    <span style="font-size: 4rem;">📦</span>
+                </div>
+                <h3 class="text-muted">No hay productos disponibles</h3>
+                <p class="text-muted">Usa el formulario de arriba para crear productos en tiempo real</p>
+            </div>
+            {{/if}}
+        </div>
+    </div>
+</div>
+
+<!-- Toast para notificaciones -->
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="toast" class="toast" role="alert">
+        <div class="toast-header">
+            <span id="toastIcon">ℹ️</span>
+            <strong class="me-auto" id="toastTitle">Notificación</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
+        </div>
+        <div class="toast-body" id="toastBody">
+            Mensaje de notificación
+        </div>
+    </div>
+</div>

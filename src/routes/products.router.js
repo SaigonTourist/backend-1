@@ -4,9 +4,6 @@ import ProductManager from '../managers/ProductManager.js';
 const router = Router();
 const productManager = new ProductManager('./src/data/products.json');
 
-//---get productos--->
-
-
 
 router.get('/', async (req, res) => {
     try {
@@ -25,7 +22,7 @@ router.get('/', async (req, res) => {
     }
 });
 
-//---por id--->
+
 router.get('/:pid', async (req, res) => {
     try {
         const { pid } = req.params;
@@ -52,14 +49,17 @@ router.get('/:pid', async (req, res) => {
     }
 });
 
-//---post producto--->
-
-
 
 router.post('/', async (req, res) => {
     try {
         const productData = req.body;
         const newProduct = await productManager.addProduct(productData);
+        
+        
+        if (req.io) {
+            req.io.emit('products-updated');
+            console.log('📡 Evento products-updated emitido via HTTP');
+        }
         
         res.status(201).json({
             status: 'success',
@@ -75,9 +75,6 @@ router.post('/', async (req, res) => {
     }
 });
 
-//---modificar producto--->
-
-
 
 router.put('/:pid', async (req, res) => {
     try {
@@ -85,6 +82,12 @@ router.put('/:pid', async (req, res) => {
         const updatedFields = req.body;
         
         const updatedProduct = await productManager.updateProduct(pid, updatedFields);
+        
+
+        if (req.io) {
+            req.io.emit('products-updated');
+            console.log('📡 Evento products-updated emitido via HTTP');
+        }
         
         res.json({
             status: 'success',
@@ -107,11 +110,17 @@ router.put('/:pid', async (req, res) => {
     }
 });
 
-//---del prod--->
+
 router.delete('/:pid', async (req, res) => {
     try {
         const { pid } = req.params;
         const deletedProduct = await productManager.deleteProduct(pid);
+        
+   
+        if (req.io) {
+            req.io.emit('products-updated');
+            console.log('📡 Evento products-updated emitido via HTTP');
+        }
         
         res.json({
             status: 'success',

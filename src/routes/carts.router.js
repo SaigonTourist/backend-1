@@ -79,19 +79,18 @@ router.post('/:cid/product/:pid', async (req, res) => {
     try {
         const { cid, pid } = req.params;
         
-        console.log(`Intentando agregar producto ${pid} al carrito ${cid}`); // ← Debug
+        console.log(`Intentando agregar producto ${pid} al carrito ${cid}`); 
         
         const updatedCart = await cartManager.addProductToCart(cid, pid);
         
-        console.log(`Producto agregado exitosamente:`, updatedCart); // ← Debug
-        
+        console.log(`Producto agregado exitosamente:`, updatedCart);
         res.json({
             status: 'success',
             message: 'Producto agregado al carrito exitosamente',
             payload: updatedCart
         });
     } catch (error) {
-        console.error('Error agregando producto al carrito:', error); // ← Más específico
+        console.error('Error agregando producto al carrito:', error);
         if (error.message.includes('no encontrado')) {
             return res.status(404).json({
                 status: 'error',
